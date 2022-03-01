@@ -1,6 +1,20 @@
+<%# navbar in bootstrap style %>
+<nav class="navbar navbar-expand-md sticky-top navba-light" style="background-color: #F7ECDE;">
+<div class ="container-fluid">
+<%=link_to "Organise-It" , root_path, class:"navbar-brand"%>
+</div>
+<ul class = "navbar-nav mr-5-lg">
 <% if user_signed_in?%>
-<span> Hello, <%= current_user.first_name%>
-    <%= link_to "Log Out", destroy_user_session_path, method: :delete%>
+<%# <span> Hello, <%= current_user.first_name%>
+   <li class="nav-item"> 
+        <%= link_to "Log Out", destroy_user_session_path, method: :delete ,class: "nav-link"%>
+    </li>
 <%else%>
-    <%= link_to "Log In" , new_user_session_path %>
+    <li class = "nav-item">
+        <%= link_to "Log In" , new_user_session_path, class:"nav_link" %> 
+    </li>
+
 <%end%>
+</ul>
+
+</nav>
