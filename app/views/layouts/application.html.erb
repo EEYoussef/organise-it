@@ -11,6 +11,16 @@
   </head>
 
   <body>
+  <%# alert messages when logging in  %>
+    <% flash.each do |key,value| %>
+      <div class ="alert alert-info alert dissmissable fade show" role = "alert">
+        <%=value%>
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden ="true">&times; </span>
+        </button>
+      </div>
+    <% end %>
+    <%= render "shared/navbar"%>
     <%= yield %>
   </body>
 </html>
