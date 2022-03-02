@@ -1,0 +1,8 @@
+<h1><%= @user.full_name%></h1>
+<h2>Bio</h2>
+<p> <%= @user.bio%> </p>
+<%# allow the user to edit the profile if it is their profile %>
+<% if current_user.id == @user.id%>
+
+    <%=link_to "Edit My Profile", edit_user_path(current_user), class: "btn btn-primary"%>
+<%end%>

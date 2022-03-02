@@ -1,0 +1,15 @@
+<h2>Profile </h2>
+<form action= <%= profile_update_path("1") method ="POST"%>>
+<input type = "hiden" name="_method" value = "put">
+<input type="hidden" value=<%=form_authenticity_token%> name = "authenticity_token">
+<div class="row">
+<img src="..." class="img-thumbnail" alt="...">
+  <div class="col">
+    <input type="text" class="form-control" placeholder="First name" aria-label="First name">
+  </div>
+  <div class="col">
+    <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+  </div>
+</div>
+<input type="submit" value="Save"/>
+</form>

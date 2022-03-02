@@ -1,0 +1,15 @@
+<h1 class ="hero-title text-center">Users</h1>
+<section class = "container">
+    <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-4">
+    <%@users.each do |user|%>
+        <div class = "col-md-4">
+            <div class = "card border-dark h-100">
+                <div class ="card-body">
+                    <h5><%= "#{user.first_name} #{user.last_name}"  %> </h5>
+                    <p class="card-text text-secondary"><%= user.bio%></p>
+                </div>
+            </div>
+        </div>
+    <%end%>
+    </div>
+    </section>
