@@ -8,4 +8,5 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
   has_many:user_skills
+  has_many:projects
 end

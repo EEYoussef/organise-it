@@ -18,7 +18,9 @@
    <li class="nav-item"> 
         <%= link_to "Profile", user_path(current_user) ,class: "nav-link"%>
     </li>
-    
+    <li class="nav-item">
+      <%=link_to "Post a Project", new_project_path, class: "nav-link"%>
+  </li>
 <%else%>
     <li class = "nav-item">
         <%= link_to "Log In" , new_user_session_path, class:"nav_link" %> 
