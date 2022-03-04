@@ -4,50 +4,28 @@
       <%if @project.picture.attached?%>
         <%=image_tag @project.picture, alt: @project.title, class:"thumbnail card-img top"%>
       <%else%>
-        <%=image_tag "default_pic.jpg", alt: "rubber duck", class:"thumbnail card-img top"%>
+        <%=image_tag "default_pic.jpg", alt: "default", class:"thumbnail card-img top"%>
       <%end%>
     </div>
   </div>
   <div class='sidebar col-lg-4 p-0 mx-2 d-md-block'> 
-    <h1 class='mb-sm-2 mb-md-5'><%=@listing.title%></h1>
-    <h4 class='text-muted'>Condition: <%=format_condition(@listing.condition)%></h4>
-    <h5 class='text-muted'>Price: <%=format_price(@listing.price)%></h5>
-    <p><%=@listing.description%></p>
+    <h1 class='mb-sm-2 mb-md-5'><%=@project.title%></h1>
+    <h5 class='text-muted'>Price: <%=format_price(@project.price)%></h5>
+    <p><%=@project.description%></p>
     
     
-    <%if current_user && @listing.sold == false %>
-    <button class='btn btn-primary mb-3 pr-2' data-stripe="payment">Buy:<%=format_price(@listing.price)%> </button>
-     <%elsif @listing.sold%>
-     <button class='btn btn-secondary' disabled>SOLD</button>
-     <%else%>
-     <%=button_to "Login to buy", new_user_session_path, class: "btn btn-info"%>
-     <%end%>
-     <div class='container'>
-    
-    
-    
-    <%if current_user && current_user.id == @listing.user_id%>
+ 
+    <%if current_user && current_user.id == @project.user_id%>
       <div class='d-flex justify-content-equally'>
-        <%= link_to "Edit", edit_listing_path(@listing.id), class: "btn btn-warning mr-2" %>
-        <%= link_to "Delete", @listing, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
+        <%= link_to "Edit", edit_project_path(@project.id), class: "btn btn-warning mr-2" %>
+        <%= link_to "Delete", @project, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
       </div>
     <%end%>
   </div>
   </div>
  
 </section>
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-document
-  .querySelector("[data-stripe='payment']")
-  .addEventListener("click", () => {
-    const stripe = Stripe("<%=Rails.application.credentials.dig(:stripe, :public_key)%>");
-    console.log(stripe);
-    stripe.redirectToCheckout({
-      sessionId: "<%=@session_id%>"
-    })
-  })
-</script>
+
 
 
 
