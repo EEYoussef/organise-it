@@ -28,6 +28,13 @@ class ProjectsController < ApplicationController
   def edit
   end
   def update
+    @project.update(project_params)
+    if @project.save 
+      redirect_to @project, notice: "Project successfully updated"
+    else
+      
+      render "edit", notice: "Something went wrong"
+    end 
   end
 
   def destroy
@@ -44,7 +51,7 @@ end
     @project = Project.find(params[:id])
   end
   def project_params
-    params.require(:project).permit(:title, :description, :budget, :price)
+    params.require(:project).permit(:title, :description, :budget, :price, :picture)
   end
 
 end

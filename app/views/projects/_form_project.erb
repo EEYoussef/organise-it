@@ -1,10 +1,15 @@
 <%=form_with model: @project, local: true do |f|%>
   
   <div class='form-group mb-3'> 
+  <h5>
     <%=f.label :title, class: "form-label"%>
+    </h5>
     <%=f.text_field :title%>
   </div>
-  
+   <div class='form-group mb-3'> 
+    <%=f.label :description, class: "form-label"%>
+    <%=f.text_area :description, class: "form-control"%>
+  </div>
   <div class='form-group mb-3'> 
     <%=f.label :price, class: "form-label"%>
     <%=f.number_field :price%>
@@ -15,9 +20,10 @@
     <%=f.number_field :budget%>
   </div>
 
+  
    <div class='form-group mb-3'> 
-    <%=f.label :description, class: "form-label"%>
-    <%=f.text_area :description, class: "form-control"%>
+    <%=f.label :picture, class: "form-label"%>
+    <%=f.file_field :picture, accept: "image/png, image/jpg, image/jpeg", class: "form-select"%>
   </div>
 
 <div class='actions'> 
