@@ -18,7 +18,8 @@ class ProjectsController < ApplicationController
   def create 
     @project = current_user.projects.new(project_params)
     if @project.save 
-      redirect_to @project, notice: "Listing successfully created"
+       redirect_to @project, notice: "project successfully created"
+      
     else
      
       render "new", notice: "Something went wrong"
@@ -32,7 +33,6 @@ class ProjectsController < ApplicationController
     if @project.save 
       redirect_to @project, notice: "Project successfully updated"
     else
-      
       render "edit", notice: "Something went wrong"
     end 
   end
@@ -50,8 +50,8 @@ end
   def set_project
     @project = Project.find(params[:id])
   end
+  
   def project_params
-    params.require(:project).permit(:title, :description, :budget, :price, :picture)
+    params.require(:project).permit(:title, :description, :budget, :price, :picture ,:freelancer_user_id)
   end
-
 end

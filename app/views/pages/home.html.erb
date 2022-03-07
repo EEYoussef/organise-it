@@ -1,3 +1,5 @@
+  
+
   <section class="py-5 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
@@ -6,8 +8,12 @@
         <p class="lead text-muted">Are you a talented freelancer? Do you have something to share with others? and why not earn some money? Are you an expert in DIY hacks and tricks?</p>
         
         <p>
-          <a href="#" class="btn btn-primary my-2">Get Started</a>
-          <a href="#" class="btn btn-secondary my-2">SignIn</a>
+        <%if !user_signed_in?%>
+         
+          <%=link_to "Get Started",new_user_registration_path,class: "btn btn-primary my-2"%>
+          <%=link_to "SignIn",new_user_session_path,class: "btn btn-secondary my-2"%>
+        <%end%>
+    
         </p>
       </div>
     </div>

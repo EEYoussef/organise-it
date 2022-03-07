@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_03_060535) do
+ActiveRecord::Schema.define(version: 2022_03_06_115618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,14 +43,27 @@ ActiveRecord::Schema.define(version: 2022_03_03_060535) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "offers", force: :cascade do |t|
+    t.text "message"
+    t.bigint "user_id", null: false
+    t.bigint "project_id", null: false
+    t.boolean "accept", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_offers_on_project_id"
+    t.index ["user_id"], name: "index_offers_on_user_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "title"
     t.string "description"
     t.string "budget"
-    t.integer "price"
+    t.integer "price", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "freelanceruser_id"
+    t.index ["freelanceruser_id"], name: "index_projects_on_freelanceruser_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -97,7 +110,10 @@ ActiveRecord::Schema.define(version: 2022_03_03_060535) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "offers", "projects"
+  add_foreign_key "offers", "users"
   add_foreign_key "projects", "users"
+  add_foreign_key "projects", "users", column: "freelanceruser_id"
   add_foreign_key "user_skills", "skills"
   add_foreign_key "user_skills", "users"
   add_foreign_key "users", "roles"

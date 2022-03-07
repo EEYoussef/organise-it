@@ -4,7 +4,7 @@
     <div class="container">
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <%@projects.each do |project|%>
+        <% @projects.each do |project|%>
         <div class="col">
           <div class="card shadow-sm">
           <%if project.picture.attached?%>
