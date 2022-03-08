@@ -1,0 +1,11 @@
+<h1>My Offers</h1>
+<%  @offers.each do |o|%>
+<ul>
+    <li>Message:
+        <%=o.message%>
+        <%= o.project.title%>
+        <%= o.project.user_id%>
+    </li>
+
+</ul>
+<%end%>

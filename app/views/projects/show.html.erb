@@ -22,8 +22,15 @@
       </div>
     <%else%>
       <div class='d-flex justify-content-equally'>
+      <%# to check if the user had made an offer before %>
+      
+        <%found_offer =  Offer.where(user_id: current_user , project_id: @project.id)%>
+       <% if found_offer.empty?%>
         <%= link_to "Place an offer", new_project_offer_path(@project.id), class: "btn btn-warning mr-2" %>
-       
+        <%else%>
+        
+        <%= link_to "View Your Offer", project_offer_path(:project_id => @project.id, :id => found_offer.ids[0]), class: "btn btn-warning mr-2" %>
+       <%end%>
       </div>
     <%end%>
   </div>
