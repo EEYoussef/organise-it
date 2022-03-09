@@ -1,7 +1,7 @@
 class CreateProjects < ActiveRecord::Migration[6.1]
   def change
     create_table :projects do |t|
-      t.string :name
+      t.string :title
       t.string :description
       t.string :budget
       t.integer :price
