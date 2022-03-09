@@ -52,6 +52,6 @@ end
   end
   
   def project_params
-    params.require(:project).permit(:title, :description, :budget, :price, :picture ,:freelancer_user_id)
+    params.require(:project).permit(:title, :description, :budget, :price ,:freelancer_user_id,  pictures: [])
   end
 end

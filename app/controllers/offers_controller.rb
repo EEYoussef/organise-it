@@ -2,7 +2,7 @@ class OffersController < ApplicationController
 
     before_action :get_offer, only: [:edit, :show]
     before_action :get_project
-    before_action :get_offers , only:[:show]
+    before_action :get_offers , only:[:show, :index]
     
     def index
       @offers = Offer.includes(:user, :project)

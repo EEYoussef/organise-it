@@ -12,15 +12,19 @@
     <%=link_to "Projects", projects_path, class: "nav-link"%>
   </li>
 <% if user_signed_in?%>
-   <li class="nav-item"> 
-        <%= link_to "Log Out", destroy_user_session_path, method: :delete ,class: "nav-link"%>
-    </li>
+   
    <li class="nav-item"> 
         <%= link_to "Profile", user_path(current_user) ,class: "nav-link"%>
+    </li>
+     <li class="nav-item"> 
+        <%= link_to "My Offers", project_offers_path(current_user) ,class: "nav-link"%>
     </li>
     <li class="nav-item">
       <%=link_to "Post a Project", new_project_path, class: "nav-link"%>
   </li>
+  <li class="nav-item"> 
+        <%= link_to "Log Out", destroy_user_session_path, method: :delete ,class: "nav-link"%>
+    </li>
 <%else%>
     <li class = "nav-item">
         <%= link_to "Log In" , new_user_session_path, class:"nav_link" %> 
