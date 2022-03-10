@@ -6,6 +6,7 @@
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <%@projects.each do |project|%>
+        
           <%if project.user_id == current_user.id%>
             <div class="col">
               <div class="card shadow-sm">
@@ -48,7 +49,7 @@
             <div class="col">
               <div class="card shadow-sm">
               <%if project.pictures.attached?%>
-                <%=image_tag project.pictures, alt: project.title, class:"bd-placeholder-img card-img-top",width:"100%", height:"225"%>
+                <%=image_tag project.pictures[0], alt: project.title, class:"bd-placeholder-img card-img-top",width:"100%", height:"225"%>
               <%else%>
                 <%=image_tag "default_pic.jpg", alt: "default", class:"bd-placeholder-img card-img-top",width:"100%", height:"225"%>
               <%end%>
