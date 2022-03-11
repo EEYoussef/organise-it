@@ -20,14 +20,13 @@ Rails.application.routes.draw do
   # get "payments/success/:id", to: "payments#success", as: "payments_success"
   # post "payments/webhook", to: "payments#webhook"
 
-  
+resources :offers ,only: [:show,:index]
 resources :users, only: [:index, :show, :edit, :update]
 
-
-
 resources :projects do
-  resources :offers , only: [:index, :show, :new, :create, :update] 
+  resources :offers , only: [ :new, :create, :update] 
 end
-  
-  
+# to list all offers for a certain project
+get "projects/:project_id/offers", to: "offers#offers_list", as: "offers_list"
+
 end

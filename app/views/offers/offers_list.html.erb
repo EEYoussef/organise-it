@@ -1,7 +1,7 @@
-<h1>My Offers</h1>
+<h1> list of offers For <%= @project.title%> </h1>
 <div class="container">
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-<%  @offers.each do |offer|%>
+<%  @offers_list.each do |offer|%>
  <div class="col">
 <div class="card shadow-sm">
 <div class="card" style="width: 18rem;">
@@ -15,8 +15,8 @@
     <li>Message:
         <%=offer.message%>
      </li>
-     <li>Owner:
-    <% user_name = User.find(offer.project.user_id)%>
+     <li>Offered By:
+    <% user_name = User.find(offer.user_id)%>
     <%=user_name.first_name%>
     </li>
     <div class="btn-group">

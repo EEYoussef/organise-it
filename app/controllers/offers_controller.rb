@@ -1,9 +1,9 @@
 class OffersController < ApplicationController
 
-    before_action :get_offer, only: [:edit, :show]
-    before_action :get_project
-    before_action :get_offers , only:[:show, :index]
-    
+    before_action :get_offer, only: [:edit, :show ]
+    before_action :get_project, only: [:new,:offers_list,:create]
+    before_action :get_offers , only:[ :index]
+    before_action :get_offers_list, only: [:offers_list]
     def index
       @offers = Offer.includes(:user, :project)
     
@@ -19,8 +19,11 @@ class OffersController < ApplicationController
     end
     def edit
     end
-
+    # to list all offers of a certain project
+    def offers_list
+    end
     def create 
+       
         @offer = @project.offers.new(offer_params)
         @offer.user_id =  current_user.id
         if @offer.save 
@@ -49,5 +52,8 @@ class OffersController < ApplicationController
      end
      def get_offers
       @offers = current_user.offers.all
+    end
+    def get_offers_list
+      @offers_list = Offer.where(project_id: params[:project_id])
     end
 end

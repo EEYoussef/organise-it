@@ -38,6 +38,15 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+   
+  # check if the offer has been accepted if yes the offer has to be done first.
+    if @project.offers.where(accept: false).empty?
+      @project.destroy
+      redirect_to projects_path, notice: "Succesfully deleted"
+      flash[:notice] = "Succesfully deleted"
+    else
+      flash[:alert] = "This offer cannot be deleted.... this offer has been accepted"
+    end
   end
 
   
