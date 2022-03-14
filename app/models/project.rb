@@ -3,5 +3,6 @@ class Project < ApplicationRecord
   has_many_attached:pictures
   belongs_to :freelancer_user, class_name: 'User', optional: true
   has_many :offers
+  has_many :project_outcomes
   
 end

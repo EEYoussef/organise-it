@@ -1,0 +1,15 @@
+
+<% if !@project_outcomes.empty? %>
+<h1>Outcomes for Project <%=@project.title%></h1>
+
+ <%@project_outcomes.each do |outcome|%>
+<%= outcome.id%>
+    <div class="card-body">
+    <h5 class="card-title"><%=outcome.title%></h5>
+        <p class="card-text"><%=outcome.details%></p>
+<%=link_to "View to Accept and Pay", project_project_outcome_path(@project.id,outcome.id), class: "btn btn-sm btn-outline-secondary"%>
+ </div>
+ <%end%>
+ <%else%> 
+ <h1>No Outcome Yet</h1>  
+<%end%>

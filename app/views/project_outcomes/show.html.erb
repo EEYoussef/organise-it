@@ -1,0 +1,24 @@
+<h1>Project <%= @project.title%></h1>
+<p>Outcomes:</p>
+
+<p><%=@project_outcome.title%></p>
+<p><%=@project_outcome.details%></p>
+
+<%if current_user.id == @project.user_id && @project_outcome.done == false %>
+<button class='btn btn-primary mb-3 pr-2' data-stripe="payment">Pay:<%=format_price(@project.price)%> </button>
+    <%elsif @project_outcome.done%>
+    <button class='btn btn-secondary' disabled>PAIED</button>
+    <%end%>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+document
+  .querySelector("[data-stripe='payment']")
+  .addEventListener("click", () => {
+    const stripe = Stripe("<%=Rails.application.credentials.dig(:stripe, :public_key)%>");
+    console.log(stripe);
+    stripe.redirectToCheckout({
+      sessionId: "<%=@session_id%>"
+    })
+  })
+</script>
