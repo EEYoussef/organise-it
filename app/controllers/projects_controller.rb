@@ -3,6 +3,7 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   #To allow users who created the project only to edit in them 
   before_action :authorize_user, only: [:edit, :update, :destroy]
+  before_action :check_sold, only: [:edit, :update, :destroy,:new,:create]
  
   def index
     @projects = Project.all
@@ -62,5 +63,11 @@ end
   
   def project_params
     params.require(:project).permit(:title, :description, :budget, :price ,:freelancer_user_id,  pictures: [])
+  end
+  def check_sold
+    if @project.sold
+      flash[:alert] = "This project is already sold out"
+      redirect_to projects_path
+    end 
   end
 end
