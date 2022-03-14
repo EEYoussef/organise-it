@@ -10,8 +10,9 @@ class PaymentsController < ApplicationController
    payment = Stripe::PaymentIntent.retrieve(payment_intent_id)
    project_id = payment.metadata.project_id 
    pp payment.charges.data[0].receipt_url
-   @project.update(receipt_url: payment.charges.data[0].receipt_url )
+   
    @project = Project.find(project_id)
-   @project.update(sold: true)
+   @project.update(sold: true, receipt_url: payment.charges.data[0].receipt_url)
+   
   end
 end

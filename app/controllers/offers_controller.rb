@@ -78,7 +78,7 @@ class OffersController < ApplicationController
       @offers_list = Offer.where(project_id: params[:project_id])
     end
     def authorize_user_sender
-      if @offer.user_id != current_user.id
+      if @project.user_id == current_user.id
         flash[:alert] = "You don't have permission"
         redirect_to projects_path
       end 

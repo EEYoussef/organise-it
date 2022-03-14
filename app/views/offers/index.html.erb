@@ -21,8 +21,9 @@
     <%=user_name.first_name%>
     </li>
     <div class="btn-group">
+    
+    <% if offer.accept == true && offer.project.sold==false%>
     <span class="badge badge-success">Accepted</span>
-    <% if offer.accept && offer.project.sold==false%>
     <%=link_to "Submit Outcome", new_project_project_outcome_path(offer.project.id), class: "btn btn-sm btn-outline-secondary"%>
     <%elsif offer.project.sold== true%>
      <button class='btn btn-secondary' disabled>PAIED</button>
