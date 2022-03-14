@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_06_115618) do
+ActiveRecord::Schema.define(version: 2022_03_14_083759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,17 @@ ActiveRecord::Schema.define(version: 2022_03_06_115618) do
     t.index ["user_id"], name: "index_offers_on_user_id"
   end
 
+  create_table "project_outcomes", force: :cascade do |t|
+    t.string "title"
+    t.text "details"
+    t.time "timestamp"
+    t.boolean "done", default: false
+    t.bigint "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_project_outcomes_on_project_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "title"
     t.string "description"
@@ -63,7 +74,8 @@ ActiveRecord::Schema.define(version: 2022_03_06_115618) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "freelanceruser_id"
-    t.index ["freelanceruser_id"], name: "index_projects_on_freelanceruser_id"
+    t.boolean "sold"
+    t.text "receipt_url"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -112,6 +124,7 @@ ActiveRecord::Schema.define(version: 2022_03_06_115618) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "offers", "projects"
   add_foreign_key "offers", "users"
+  add_foreign_key "project_outcomes", "projects"
   add_foreign_key "projects", "users"
   add_foreign_key "projects", "users", column: "freelanceruser_id"
   add_foreign_key "user_skills", "skills"
