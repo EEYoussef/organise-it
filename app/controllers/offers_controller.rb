@@ -29,14 +29,18 @@ class OffersController < ApplicationController
      
     end
     def update
+      # Change the value of accept in offer to be true 
+      # Change the value of freelanceruser_id to the user id of the one providing the offer that has been accepted
       @offer.update_attribute(:accept,true)
-      if @offer.save 
-        flash[:notice] = "Project successfully updated"
+      @project.update_attribute(:freelanceruser_id, @offer.user_id)
+      if @offer.save && @project.save
+        flash[:notice] = "offer successfully updated"
         redirect_to @offer
       else
         flash[:alert] = "Something went wrong"
         render "edit", notice: "Something went wrong"
       end 
+        
     end
     # to list all offers of a certain project
     def offers_list
