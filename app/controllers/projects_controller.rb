@@ -1,9 +1,11 @@
 class ProjectsController < ApplicationController
+
   before_action :authenticate_user!
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   #To allow users who created the project only to edit in them 
   before_action :authorize_user, only: [:edit, :update, :destroy]
- 
+  before_action :check_sold, only: [:edit, :update, :destroy]
+
   def index
     @projects = Project.all
   end
@@ -21,8 +23,12 @@ class ProjectsController < ApplicationController
        redirect_to @project, notice: "project successfully created"
       
     else
-     
+      
+      @project.errors.full_messages.each do |message|
+        flash[:alert] = message
+      end
       render "new", notice: "Something went wrong"
+      
     end 
   end 
 # for the user to edit the project/and action for updateing
@@ -63,4 +69,11 @@ end
   def project_params
     params.require(:project).permit(:title, :description, :budget, :price ,:freelancer_user_id,  pictures: [])
   end
+  def check_sold
+    if @project.sold
+      flash[:alert] = "This project is already sold out"
+      redirect_to projects_path
+    end 
+  end
+ 
 end

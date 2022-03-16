@@ -34,28 +34,37 @@
     <p><%=@project.description%></p>
     
     <%# if the user is the owner of the project %>
-    <%if current_user && current_user.id == @project.user_id%>
-      <div class='d-flex justify-content-equally'>
-        <%= link_to "Edit", edit_project_path(@project.id), class: "btn btn-outline-warning mr-2" %>
-        <%= link_to "Delete", @project, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-outline-danger mr-2" %>
-      <%# if this project has offers  %>
-      <br>
-       <%= link_to "View Offers", offers_list_path(@project.id), class: "btn btn-outline-info mr-2" %>
-      </div>
+    <%if @project.sold==false%>
+      <%if current_user && current_user.id == @project.user_id%>
+        <div class='d-flex justify-content-equally'>
+          <%= link_to "Edit", edit_project_path(@project.id), class: "btn btn-outline-warning mr-2" %>
+          <%= link_to "Delete", @project, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-outline-danger mr-2" %>
+          <%# if this project has offers  %>
+          <%found_offer =  Offer.where(project_id: @project.id)%>
+            <% if found_offer.empty?%>
+            <button class='btn btn-secondary' disabled>No Offers Placed</button>
+          <br>
+            <%else%>
+            <%= link_to "View Offers", offers_list_path(@project.id), class: "btn btn-outline-info mr-2" %>
+            </div>
+            <%end%>
+      <%else%>
+        <div class='d-flex justify-content-equally'>
+        <%# to check if the user had made an offer before %>
+        
+          <%found_offer =  Offer.where(user_id: current_user , project_id: @project.id)%>
+        <% if found_offer.empty?%>
+          <%= link_to "Place an offer", new_project_offer_path(@project.id), class: "btn btn-warning mr-2" %>
+          <%else%>
+          <%= link_to "View Your Offer", offer_path(found_offer[0].id), class: "btn btn-warning mr-2" %>
+        <%end%>
+        </div>
+      <%end%>
+    </div>
+    </div>
     <%else%>
-      <div class='d-flex justify-content-equally'>
-      <%# to check if the user had made an offer before %>
-      
-        <%found_offer =  Offer.where(user_id: current_user , project_id: @project.id)%>
-       <% if found_offer.empty?%>
-        <%= link_to "Place an offer", new_project_offer_path(@project.id), class: "btn btn-warning mr-2" %>
-        <%else%>
-        <%= link_to "View Your Offer", offer_path(found_offer[0].id), class: "btn btn-warning mr-2" %>
-       <%end%>
-      </div>
+         <button class='btn btn-secondary' disabled>PAID</button>
     <%end%>
-  </div>
-  </div>
  
 </section>
 

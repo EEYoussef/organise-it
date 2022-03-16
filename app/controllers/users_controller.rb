@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   
   #to grab all the users from the database and put them in an instance variable users
   def index 
-    @users = User.all
+    # @users = User.all
   end
 
 # to grab a certain user by id and put it in the instance variable user
