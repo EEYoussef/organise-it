@@ -18,30 +18,7 @@ class ProjectOutcomesController < ApplicationController
   end
 
   def show
-    session = Stripe::Checkout::Session.create(
-      payment_method_types: ['card'],
-      customer_email:current_user && current_user.email, 
-      line_items: [
-        {
-          name: @project.title,
-          description: @project.description,
-          amount: @project.price, 
-          currency: 'aud',
-          quantity: 1
-        }
-      ],
-      payment_intent_data: {
-        metadata: {
-          user_id: current_user && current_user.id, 
-          project_id: @project.id
-        }
-      },
-      success_url: "#{root_url}payments/success/#{@project.id}",
-      cancel_url: root_url
-    )
-
-    @session_id = session.id
-  end
+     end
 
   def new 
     @project_outcome =ProjectOutcome.new

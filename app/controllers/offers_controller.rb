@@ -6,6 +6,7 @@ class OffersController < ApplicationController
     before_action :get_project, only: [:new,:offers_list,:create,:update]
     before_action :get_offers , only:[ :index]
     before_action :get_offers_list, only: [:offers_list]
+  
 
      # To check if the user creating or viewing the offers is the owner of the offer
      before_action :authorize_user_sender,only: [:new]

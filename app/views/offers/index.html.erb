@@ -24,12 +24,17 @@
     
     <% if offer.accept == true && offer.project.sold==false%>
     <span class="badge badge-success">Accepted</span>
-    <%=link_to "Submit Outcome", new_project_project_outcome_path(offer.project.id), class: "btn btn-sm btn-outline-secondary"%>
+    <%# If user already submited an outcome %>
+    <%if ProjectOutcome.find_by(project_id:offer.project.id)%>
+        <%=link_to "show Outcomes", project_project_outcomes_path(offer.project.id), class: "btn btn-sm btn-outline-secondary"%>
+        <%=link_to "Submit a new Outcome", new_project_project_outcome_path(offer.project.id), class: "btn btn-sm btn-outline-secondary"%>
+    <%else%>
+        <%=link_to "Submit a new Outcome", new_project_project_outcome_path(offer.project.id), class: "btn btn-sm btn-outline-secondary"%>
+    <%end%>
     <%elsif offer.project.sold== true%>
      <button class='btn btn-secondary' disabled>PAIED</button>
     <%else%>
-    <%=link_to "View", project_path(offer.project.id), class: "btn btn-sm btn-outline-secondary"%>
-   
+     <button class='btn btn-secondary' disabled>Not Yet Accepted</button>
     <%end%>
      </div>
      
