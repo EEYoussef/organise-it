@@ -1,9 +1,9 @@
 class PaymentsController < ApplicationController
+  # skip authentication comming from webhook
   skip_before_action :verify_authenticity_token, only: [:webhook]
   def success
+    # get the payment entry for a certain project
     @payment = Payment.find_by(project_id: params[:id])
-    #@listing.sold = true 
-   
   end
   def create_payment_intent
   
@@ -35,14 +35,7 @@ class PaymentsController < ApplicationController
   end 
   def webhook 
     puts "********webhook"
-  #  payment_intent_id = params[:data][:object][:payment_intent]
-  #  payment = Stripe::PaymentIntent.retrieve(payment_intent_id)
-  #  project_id = payment.metadata.project_id 
-  #  pp payment.charges.data[0].receipt_url
-   
-  #  @project = Project.find(project_id)
-  #  @project.update(sold: true, receipt_url: payment.charges.data[0].receipt_url)
-   
+ 
   begin 
     payload = request.raw_post
     sig_head = request.headers['HTTP_STRIPE_SIGNATURE']
@@ -60,9 +53,7 @@ class PaymentsController < ApplicationController
       return
      
     end
-    puts "**************"
-    pp event
-    puts "****************"
+    
    payment_intent_id = event.data.object.payment_intent
    payment = Stripe::PaymentIntent.retrieve(payment_intent_id)
    project_id = payment.metadata.project_id 
@@ -71,9 +62,8 @@ class PaymentsController < ApplicationController
    project = Project.find(project_id)
    freelanceruser_id= project.freelanceruser_id
    project.update(sold: true)
-   p payment.metadata.user_id
-   p "------"
-    p payment.metadata.project_id 
+  
+  # create an entry in the payment tabel to keep track of the payments happening in the app
    Payment.create(project_id: project_id, user_id: user_id, freelanceruser_id: freelanceruser_id, payment_id: payment_intent_id, receipt_url: payment.charges.data[0].receipt_url)
   end 
   

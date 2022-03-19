@@ -7,6 +7,7 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}"
   end
+  validates :first_name, presence: true
   has_many:user_skills
   has_many:projects
   has_many:freelancer_user_project, class_name: 'Project', foreign_key: 'freelancer_user_id'

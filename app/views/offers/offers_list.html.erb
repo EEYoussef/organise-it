@@ -19,8 +19,7 @@
         <%=offer.message%>
      </li>
      <li>Offered By:
-    <% user_name = User.find(offer.user_id)%>
-    <%=user_name.first_name%>
+        <%=offer.user.first_name%>
     </li>
     <div class="btn-group">
     <%# if offer has been accepted already %>

@@ -1,14 +1,12 @@
 
+<%# form for the offer input for a certain project %>
 <%=form_with model: [@project,@offer], local: true do |f|%>
-  
   <div class='form-group mb-3'> 
-  
    <div class='form-group mb-3'> 
     <%=f.label :message, class: "form-label"%>
     <%=f.text_area :message, class: "form-control"%>
   </div>
-
-<div class='actions'> 
-   <%=f.submit%>
-</div>
+  <div class='actions'> 
+  <%=f.submit%>
+  </div>
 <%end%>

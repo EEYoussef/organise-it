@@ -22,14 +22,19 @@ Rails.application.routes.draw do
   get "payments/success/:id", to: "payments#success", as: "payments_success"
   post "payments/webhook", to: "payments#webhook"
   post "payments", to: "payments#create_payment_intent", as: "create_payment_intent"
- 
-
-resources :offers ,only: [:show,:index]
+  
+# for offers
+  resources :offers ,only: [:show,:index]
+  get "o/:id", to: "offers#freelancer_show" ,as:"freelancer_offer" 
+# for Users
 resources :users, only: [:index, :show, :edit, :update]
 
+# for job outcomes
 resources :projects do
   resources :project_outcomes, only: [:index, :new,:create,:show , :edit, :update]
 end
+
+# for offers related to project
 resources :projects do
   resources :offers , only: [ :new, :create, :edit, :update] 
 end

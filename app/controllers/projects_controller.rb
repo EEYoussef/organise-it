@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-
+  #this before action allows user only to access the features of the app 
   before_action :authenticate_user!
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   #To allow users who created the project only to edit in them 
@@ -12,11 +12,11 @@ class ProjectsController < ApplicationController
 
   def show
   end
-  # to see the form
+  
   def new 
     @project = Project.new
   end 
-# the action to create the project
+# the action to creates the project
   def create 
     @project = current_user.projects.new(project_params)
     if @project.save 
@@ -69,9 +69,10 @@ end
   def project_params
     params.require(:project).permit(:title, :description, :budget, :price ,:freelancer_user_id,  pictures: [])
   end
+  # to check if the project has been sold
   def check_sold
     if @project.sold
-      flash[:alert] = "This project is already sold out"
+      flash[:alert] = "This project is already sold "
       redirect_to projects_path
     end 
   end

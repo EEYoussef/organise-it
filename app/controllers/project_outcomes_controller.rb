@@ -1,17 +1,17 @@
 class ProjectOutcomesController < ApplicationController
-  
+  #this before action allows user only to access the features of the app
   before_action :authenticate_user!
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy,:index]
   before_action :get_project_outcome, only: [:show, :edit, :update, :destroy]
   before_action :get_project_outcomes, only: [:index]
   #to check if the project has been accepted
-  before_action :check_acceptance
+  # before_action :check_acceptance
   #To allow users who created the project only to edit in them 
   before_action :authorize_user, only: [:edit, :update, :destroy]
   
   
   def index
-    
+    # check if the projct has any outcome yet
     if @project_outcomes.empty?
       flash[:alert] = "This project doesnt have outcome yet"
     end
@@ -21,6 +21,7 @@ class ProjectOutcomesController < ApplicationController
      end
 
   def new 
+    # create a new oucome
     @project_outcome =ProjectOutcome.new
   end 
 # the action to create the project
@@ -52,11 +53,11 @@ end
   def project_outcome_params
     params.require(:project_outcome).permit(:title, :details)
   end
-  def check_acceptance
-    # offer_acceptance = @project.offers.find(user_id: current_user.id)
-    @project = Project.find(params[:project_id])
-    offer_acceptance = @project.offers.where(user_id: current_user.id)
-  end 
+  # def check_acceptance
+  #   # to return the o
+  #   @project = Project.find(params[:project_id])
+  #   offer_acceptance = @project.offers.where(user_id: current_user.id)
+  # end 
   def get_project_outcome
     @project_outcome = ProjectOutcome.find(params[:id])
   end
