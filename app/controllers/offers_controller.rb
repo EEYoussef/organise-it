@@ -7,9 +7,9 @@ class OffersController < ApplicationController
     before_action :get_offers , only:[ :index]
     before_action :get_offers_list, only: [:offers_list]
     # To check if the user creating or viewing the offers is the owner of the offer
-    before_action :authorize_user_sender,only: [:new]
+    before_action :authorize_user_sender,only: [:new,:create]
     #To check if the user is the one who has the project; the custome receiving the offer
-    before_action :authorize_user_reciever, only: [:offers_list,:update]
+    before_action :authorize_user_reciever, only: [:offers_list,:update,:show,:index]
     def index
       # @offers = Offer.includes(:user, :project)
     end
@@ -89,13 +89,14 @@ class OffersController < ApplicationController
       @offers_list = Offer.where(project_id: params[:project_id])
     end
     def authorize_user_sender
-      if @project.user_id == current_user.id
+      if @offer.user_id == current_user.id
         flash[:alert] = "You don't have permission"
         redirect_to projects_path
       end 
     end
     def authorize_user_reciever
-      if @project.user_id != current_user.id
+      @project = Project.find(params[:id])
+      if @offer.project.user_id != current_user.id
         flash[:alert] = "You don't have permission to see all the offers"
         redirect_to projects_path
       end 

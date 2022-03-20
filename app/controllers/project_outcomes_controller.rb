@@ -1,13 +1,16 @@
 class ProjectOutcomesController < ApplicationController
   #this before action allows user only to access the features of the app
   before_action :authenticate_user!
-  before_action :set_project, only: [:show, :edit, :update, :destroy,:index,:pay]
+  before_action :set_project, only: [:show, :edit, :update, :destroy,:index,:pay,:new,:create]
   before_action :get_project_outcome, only: [:show, :edit, :update, :destroy]
   before_action :get_project_outcomes, only: [:index]
   #to check if the project has been accepted
   # before_action :check_acceptance
   #To allow users who created the project only to edit in them 
-  before_action :authorize_user, only: [:edit, :update, :destroy]
+  before_action :authorize_user_freelanceer, only: [:edit, :update, :destroy]
+
+  before_action :authorize_user_freelanceer, only: [:edit, :update, :destroy,:new,:create]
+  before_action :authorize_user_owner, only: [:show,:index,:pay]
   
   
   def index
@@ -22,7 +25,8 @@ class ProjectOutcomesController < ApplicationController
   
   def new 
     # create a new oucome
-    @project_outcome =ProjectOutcome.new
+  
+    @project_outcome =@project.project_outcomes.new
   end 
 # the action to create the project
   def create 
@@ -39,11 +43,17 @@ class ProjectOutcomesController < ApplicationController
   def update
   end
 
-  def authorize_user 
-    if @project.user_id != current_user.id
+  def authorize_user_freelanceer
+    if @project.freelanceruser_id != current_user.id
       flash[:alert] = "You don't have permission to do that"
       redirect_to projects_path
     end 
+end 
+def authorize_user_owner
+  if @project.user_id != current_user.id
+    flash[:alert] = "You don't have permission to do that"
+    redirect_to projects_path
+  end 
 end 
 
   def set_project

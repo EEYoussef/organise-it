@@ -23,5 +23,8 @@ class Project < ApplicationRecord
   def convert_price_to_cents 
     self.price = (self.attributes_before_type_cast["price"].to_f * 100).round
   end 
+  def convert_price_to_cents 
+    self.budget = (self.attributes_before_type_cast["budget"].to_f * 100).round
+  end 
 
 end
