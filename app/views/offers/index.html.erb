@@ -3,14 +3,17 @@
 <div class="container">
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 <%  @offers.each do |offer|%>
- <div class="col">
-<div class="card shadow-sm">
-<div class="card" style="width: 18rem;">
- <%if offer.project.pictures.attached?%>
-     <%=image_tag offer.project.pictures[0], alt: offer.project.title, class:"card-img-top",width:"100%", height:"225"%>
- <%else%>
-    <%=image_tag "default_pic.jpg", alt: "default", class:"bd-placeholder-img card-img-top",width:"100%", height:"225"%>
-<%end%>
+    <div class="col">
+    <div class="card shadow-sm">
+    <div class="card" style="width: 18rem;">
+    <%# check if a project has an image attached else a default picture will be applied %>
+
+    <%if offer.project.pictures.attached?%>
+        <%=image_tag offer.project.pictures[0], alt: offer.project.title, class:"card-img-top",width:"100%", height:"225"%>
+    <%else%>
+        <%=image_tag "default_pic.jpg", alt: "default", class:"bd-placeholder-img card-img-top",width:"100%", height:"225"%>
+    <%end%>
+
 <h5 class="card-title">  <%= offer.project.title%> </h5>
     <ul class="list-group list-group-flush">
     <li>Message:
@@ -20,7 +23,7 @@
         <%= offer.project.user.first_name%>
     </li>
     <div class="btn-group">
-    
+    <%# to check if the offer has been accepted and not paid/sold %>
     <% if offer.accept == true && offer.project.sold==false%>
     <span class="badge badge-success">Accepted</span>
     <%# If user already submited an outcome %>

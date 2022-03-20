@@ -1,7 +1,7 @@
 class ProjectOutcomesController < ApplicationController
   #this before action allows user only to access the features of the app
   before_action :authenticate_user!
-  before_action :set_project, only: [:show, :edit, :update, :destroy,:index]
+  before_action :set_project, only: [:show, :edit, :update, :destroy,:index,:pay]
   before_action :get_project_outcome, only: [:show, :edit, :update, :destroy]
   before_action :get_project_outcomes, only: [:index]
   #to check if the project has been accepted
@@ -18,8 +18,8 @@ class ProjectOutcomesController < ApplicationController
   end
 
   def show
-     end
-
+  end
+  
   def new 
     # create a new oucome
     @project_outcome =ProjectOutcome.new

@@ -4,6 +4,11 @@ class PaymentsController < ApplicationController
   def success
     # get the payment entry for a certain project
     @payment = Payment.find_by(project_id: params[:id])
+    if @payment.nil?
+      redirect_to project_project_outcomes_path(params[:id]), alert: "Payments has not been done"
+      
+
+    end
   end
   def create_payment_intent
   
@@ -53,18 +58,19 @@ class PaymentsController < ApplicationController
       return
      
     end
-    
-   payment_intent_id = event.data.object.payment_intent
-   payment = Stripe::PaymentIntent.retrieve(payment_intent_id)
-   project_id = payment.metadata.project_id 
-   user_id = payment.metadata.user_id
-   
-   project = Project.find(project_id)
-   freelanceruser_id= project.freelanceruser_id
-   project.update(sold: true)
+    puts "********sevent"
+    puts event
+    payment_intent_id = event.data.object.payment_intent
+    payment = Stripe::PaymentIntent.retrieve(payment_intent_id)
+    project_id = payment.metadata.project_id 
+    user_id = payment.metadata.user_id
+    project = Project.find(project_id)
+    freelanceruser_id= project.freelanceruser_id
+    project.update(sold: true)
   
   # create an entry in the payment tabel to keep track of the payments happening in the app
    Payment.create(project_id: project_id, user_id: user_id, freelanceruser_id: freelanceruser_id, payment_id: payment_intent_id, receipt_url: payment.charges.data[0].receipt_url)
+ 
   end 
   
 end

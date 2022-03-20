@@ -6,11 +6,46 @@
     <h5 class="card-title"><%=outcome.title%></h5>
     <p class="card-text"><%=outcome.details%></p>
     <%# in case the user is the owner %>
-    <%if current_user==@project.user_id%>
-        <%=link_to "View to Accept and Pay", project_project_outcome_path(@project.id,outcome.id), class: "btn btn-sm btn-outline-secondary"%>
-    <%end%>
 </div>
 <%end%>
+<div>
+<%if current_user.id==@project.user_id%>
+   
+<%# payment button and functionality %>
+            <%if current_user.id == @project.user_id && @project.sold == false %>
+            <%= button_to "Pay: #{format_price(@project.price)}", 
+                create_payment_intent_path, 
+                method: :post, 
+                remote: true, 
+                params:{id: @project.id}, 
+                class: "btn btn-primary p-3", 
+                data: {disable_with: "Loading..."}
+                    %>
+                
+                <%elsif @project.sold%>
+                <button class='btn btn-secondary' disabled>PAIED</button>
+                <%end%>
+
+
+            <script src="https://js.stripe.com/v3/"></script>
+
+
+            <script>
+            document
+            .querySelector("[data-stripe='payments']")
+            .addEventListener("click", () => {
+
+                const stripe = Stripe("<%=Rails.application.credentials.dig(:stripe, :public_key)%>");
+                
+                console.log(stripe);
+                stripe.redirectToCheckout({
+                sessionId: "<%=@session_id%>"
+                });
+            })
+            </script>
+            <%# end of payment functionality %>
+<%end%>
+</div>
 <%else%> 
  <h1>No Outcome Yet</h1>  
 <%end%>

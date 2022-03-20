@@ -4,18 +4,18 @@
 <p><%=@project_outcome.title%></p>
 <p><%=@project_outcome.details%></p>
 
-<%if current_user.id == @project.user_id && @project_outcome.done == false %>
-<%= button_to "Pay: #{format_price(@project.price)}", 
-     create_payment_intent_path, 
-     method: :post, 
-     remote: true, 
-     params:{id: @project.id}, 
-     class: "btn btn-primary p-3", 
-     data: {disable_with: "Loading..."}
-      %>
+<%if current_user.id == @project.user_id && @project.sold == false %>
+  <%= button_to "Pay: #{format_price(@project.price)}", 
+      create_payment_intent_path, 
+      method: :post, 
+      remote: true, 
+      params:{id: @project.id}, 
+      class: "btn btn-primary p-3", 
+      data: {disable_with: "Loading..."}
+        %>
     
-    <%elsif @project_outcome.done%>
-    <button class='btn btn-secondary' disabled>PAIED</button>
+    <%elsif @project.sold%>
+      <button class='btn btn-secondary' disabled>PAIED</button>
     <%end%>
 
 
